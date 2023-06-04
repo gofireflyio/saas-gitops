@@ -1,5 +1,5 @@
 resource "datadog_monitor" "new_monitor_for_the_demo" {
-  name               = "AAA This monitor was created using GitOps"
+  name               = "AAA This monitor was created using GitOps1"
   type               = "metric alert"
   message            = "Monitor triggered. Notify: @hipchat-channel"
   escalation_message = "Escalation message @pagerduty"
