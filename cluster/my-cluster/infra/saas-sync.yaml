@@ -1,0 +1,32 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: saas-datadog-tf
+  namespace: flux-system
+spec:
+  interval: 30s
+  url: https://github.com/gofireflyio/saas-gitops
+  ref:
+    branch: main
+---
+apiVersion: infra.contrib.fluxcd.io/v1alpha1
+kind: Terraform
+metadata:
+  name: saas-datadog-tf
+  namespace: flux-system
+spec:
+  path: ./terraform
+  approvePlan: auto
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: saas-datadog-tf
+    namespace: flux-system
+  writeOutputsToSecret:
+    name: saas-datadog-tf-outputs
+  varsFrom:
+  - kind: Secret
+    name: datadogapikey
+  - kind: Secret
+    name: datadogappkey
